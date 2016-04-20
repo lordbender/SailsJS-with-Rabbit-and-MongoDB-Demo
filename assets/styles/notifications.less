@@ -1,0 +1,188 @@
+/*---------------------------------------------------------------------------*/
+/* notifications.css */
+/*---------------------------------------------------------------------------*/
+.theme-notification {
+  overflow: auto;
+  border-collapse: separate;
+  border: 2px solid;
+  padding: 10px 18px 10px 70px !important;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: no-repeat 22px 50%;
+}
+
+.theme-notification.notification-bold {
+  border-width: 1px;
+}
+
+table.theme-notification {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.theme-notification table {
+  width: 100%;
+}
+
+.theme-notification.notification-bold td:hover {
+  color: white;
+}
+
+.theme-notification.notification-warning td:hover {
+  color: black;
+}
+
+.theme-notification .notification-actions {
+  vertical-align: top;
+  padding-top: 4px;
+  padding-right: 0;
+  padding-left: 20px;
+}
+
+.theme-notification .notification-actions a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.theme-notification .close-icon {
+  height: 12px;
+  width: 12px;
+  margin-top: 2px;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+.theme-notification .close-icon:focus {
+}
+
+.theme-notification .check-icon {
+  height: 16px;
+  width: 16px;
+}
+
+.theme-notification.notification-subtle .check-icon {
+  background-image: url("../images/check-dark-gray.png");
+}
+
+.theme-notification.notification-subtle .close-icon {
+  background-image: url("../images/times-dark-gray.png");
+}
+
+.theme-notification.notification-subtle.notification-info .close-icon {
+  background-image: url("../images/times-info-blue.png");
+}
+
+.theme-notification.notification-subtle.notification-success .check-icon {
+  background-image: url("../images/check-success-green.png");
+}
+
+.theme-notification.notification-bold .check-icon {
+  background-image: url("../images/check-black.png");
+}
+
+.theme-notification.notification-bold .close-icon {
+  background-image: url("../images/times-black.png");
+}
+
+.theme-notification.notification-bold.notification-info .close-icon,
+.theme-notification.notification-bold.notification-danger .close-icon {
+  background-image: url("../images/times-white.png");
+}
+
+.theme-notification.notification-bold.notification-success .check-icon {
+  background-image: url("../images/check-white.png");
+}
+
+.theme-notification.notification-subtle.notification-success {
+  background-image: url("../images/thumbs-up-green.png");
+  border-color: #4b7301;
+}
+
+.theme-notification.notification-subtle.notification-warning {
+  background-image: url("../images/exclamation-red.png");
+  border-color: #feef6d;
+}
+
+.theme-notification.notification-subtle.notification-info {
+  background-image: url("../images/info-blue.png");
+  border-color: #31b0d5;
+}
+
+.theme-notification.notification-subtle.notification-danger {
+  background-image: url("../images/exclamation-red.png");
+  border-color: #be3a34;
+}
+
+.theme-notification.notification-bold.notification-success {
+  background: #4b7301 url("../images/thumbs-up-white.png");
+  border-color: #446801;
+}
+
+.theme-notification.notification-bold.notification-warning {
+  color: black;
+  background: #feef6d url("../images/exclamation-red.png");
+  border-color: #e5d762;
+}
+
+.theme-notification.notification-bold.notification-info {
+  background: #31b0d5 url("../images/info-white.png");
+  border-color: #2c9ec0;
+}
+
+.theme-notification.notification-bold.notification-danger {
+  background: #be3a34 url("../images/exclamation-white.png");
+  border-color: #ab342f;
+}
+
+.theme-notification.notification-info.notification-bold,
+.theme-notification.notification-danger.notification-bold,
+.theme-notification.notification-success.notification-bold,
+.theme-notification.notification-danger.notification-bold a,
+.theme-notification.notification-success.notification-bold a,
+.theme-notification.notification-info.notification-bold a {
+  color: white;
+}
+
+.theme-notification.notification-subtle a {
+  color: #757985;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.theme-notification.notification-subtle a:hover {
+  color: #4b4b4b;
+}
+
+.theme-notification.notification-bold a {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.theme-notification.notification-warning.notification-bold a {
+  color: black;
+}
+
+.theme-notification.notification-warning a {
+  color: #757985;
+}
+
+.theme-notification .notification-headline {
+  padding: 0;
+  margin: 0;
+}
+
+.theme-notification .action-icon {
+  margin-left: 10px;
+  float: right;
+}
+
+/* IE7 Hacks */
+
+.theme-notification .message-column {
+  *padding: 10px 10px 10px 70px;
+}
+
+.theme-notification .notification-actions {
+  *padding-top: 10px;
+  *padding-right: 16px;
+}

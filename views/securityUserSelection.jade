@@ -1,0 +1,17 @@
+extends ./layout
+
+block body
+  .container
+    .row
+      form#contact-form.contact-form(role='form')
+        .row
+          .col-md-6
+            .form-group
+              input#Name.form-control(type='text', name='Name', autocomplete='off', placeholder='Name')
+          .col-md-6
+            .form-group
+              input#email.form-control(type='email', name='email', autocomplete='off', placeholder='E-mail')
+        .row
+          .col-md-12
+            .form-group
+              textarea#Message.form-control.textarea(rows='3', name='Message', placeholder='Message')
