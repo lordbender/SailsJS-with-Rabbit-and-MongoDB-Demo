@@ -1,26 +1,32 @@
 /**
  * Created by swillison on 4/20/2016.
  */
+window.beeline = window.beeline || {};
+window.console = window.console || {
+    console: function () {
+    }
+  };
 
+window.beeline.messageTemplateHtmlBlock = function (message) {
+  var messageTemplate = '';
+  messageTemplate += '<li data-index="0" class="statusBoxValidationSummary" style="color:red;">';
+  messageTemplate += message;
+  messageTemplate += '</li>';
 
-function notificationHtmlBlock(dataId) {
+  return messageTemplate;
+}
+
+window.beeline.notificationHtmlBlock = function (dataId) {
   var alertSystemHtml = '';
 
   alertSystemHtml += ' <div data-id="' + dataId + '" class="StatusBox">';
-  alertSystemHtml += '    <table class="theme-notification notification-bold notification-danger" style="display: none;">';
-  alertSystemHtml += '       <tbody>';
-  alertSystemHtml += '          <tr>';
-  alertSystemHtml += '             <td class="message-column"></td>';
-  alertSystemHtml += '          </tr>';
-  alertSystemHtml += '       </tbody>';
-  alertSystemHtml += '    </table>';
-  alertSystemHtml += '    <table class="theme-notification notification-bold notification-danger validation-errors " style="display: none;">';
+  alertSystemHtml += '    <table class="theme-notification notification-bold notification-danger validation-errors" style="display: none;">';
   alertSystemHtml += '       <tbody>';
   alertSystemHtml += '          <tr>';
   alertSystemHtml += '             <td class="message-column">';
   alertSystemHtml += '                <span>Please fix the following errors and try again:</span>';
-  alertSystemHtml += '                <div data-id="errors-list" class="statusBoxValidationSummary" style="color:Red;display:none;">';
-  alertSystemHtml += '                </div>';
+  alertSystemHtml += '                <ul data-id="errors-list">';
+  alertSystemHtml += '                </ul>';
   alertSystemHtml += '             </td>';
   alertSystemHtml += '          </tr>';
   alertSystemHtml += '       </tbody>';
@@ -51,35 +57,76 @@ function notificationHtmlBlock(dataId) {
   return alertSystemHtml;
 }
 
-function Alerts(target) {
+/*Usage:
+ *   var x = new window.beeline.Alerts('DomElemIdToBeNestedUnder');
+ *   x.init();
+ */
+window.beeline.Alerts = function (target) {
   this.$targetElem = $('#' + target);
   this.alertRootElemDataId = target + '-message-container';
   this.$alertRootElem = {};
 
+  this.$errorRootHandle = {};
+  this.$successRootHandle = {};
+  this.$infoRootHandle = {};
+
+  this.callbackAide = function (callback) {
+    if (typeof(callback) == "function") {
+      callback();
+    }
+  };
+
   this.init = function () {
-    this.$targetElem.prepend(notificationHtmlBlock(this.alertRootElemDataId))
+    this.$targetElem.prepend(beeline.notificationHtmlBlock(this.alertRootElemDataId))
     this.$alertRootElem = $('[data-id=' + this.alertRootElemDataId + ']');
-  }
+    this.$errorRootHandle = this.$alertRootElem.find(".validation-errors");
+    this.$successRootHandle = this.$alertRootElem.find(".notification-success");
+  };
+
+  this.addError = function (message, callback) {
+
+    this.$errorRootHandle.find('[data-id=errors-list]')
+      .append(beeline.messageTemplateHtmlBlock(message));
+
+    this.$errorRootHandle.show();
+
+    this.callbackAide(callback);
+  };
+
+  this.success = function (message, callback) {
+    this.$successRootHandle.find(".message-column").empty().append(message);
+    this.$successRootHandle.show();
+
+    this.callbackAide(callback);
+  };
 
   this.showAll = function () {
     this.$alertRootElem.find('.theme-notification').show();
-  }
+  };
 
   this.hideAll = function () {
+    this.$errorRootHandle.find('[data-id=errors-list]').empty();
+    this.$successRootHandle.find(".message-column").empty();
     this.$alertRootElem.find('.theme-notification').hide();
-  }
+  };
+
+  this.init();
 }
 
-var messageTypes = {
-  success: 0,
-  warning: 1,
-  error: 2
+window.beeline.messageTypes = {
+  success: 1,
+  warning: 2,
+  error: 3
 }
 
-var messageSystem = function () {
+/*Usage:
+ *   beeline.messageSystem.init();
+ *   beeline.messageSystem.showAlert(beeline.messageSystem.showAlert("Message", "Title", beeline.messageTypes.warning, true);
+ */
+window.beeline.messageSystem = function () {
   function initMessageSystem() {
     toastr.options = {
-      "closeButton": false,
+      "closeButton": true,
       "debug": false,
       "newestOnTop": false,
       "progressBar": false,
@@ -97,19 +144,20 @@ var messageSystem = function () {
     }
   }
 
-  function displayAlert(message, title, messageType, persist) {
+  function displayAlert(message, title, messageType, persist, callback) {
     switch (messageType || -1) {
-      case messageTypes.success:
+      case beeline.messageTypes.success:
         toastr.success(message, title, {timeOut: persist === true ? null : 5000});
         break;
-      case messageTypes.warning:
+      case beeline.messageTypes.warning:
         toastr.warning(message, title, {timeOut: persist === true ? null : 5000});
         break;
-      case messageTypes.error:
+      case beeline.messageTypes.error:
         toastr.error(message, title, {timeOut: persist === true ? null : 5000});
         break;
       default:
-        toastr.warning(message, title, {timeOut: persist === true ? null : 5000});
+        console.log("Unknown message type" + messageType);
+        break;
     }
   }
 
@@ -117,8 +165,8 @@ var messageSystem = function () {
     init: function () {
       initMessageSystem();
     },
-    showAlert: function (message, title, messageType, persist) {
-      displayAlert(message, title, messageType, persist);
+    showAlert: function (message, title, messageType, persist, callback) {
+      displayAlert(message, title, messageType, persist, callback);
     },
     clear: function () {
       toastr.clear();
@@ -130,6 +178,6 @@ var messageSystem = function () {
 }();
 
 $(function () {
-  messageSystem.init();
+  window.beeline.messageSystem.init();
 });
 
