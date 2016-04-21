@@ -180,4 +180,3 @@ window.beeline.messageSystem = function () {
 $(function () {
   window.beeline.messageSystem.init();
 });
-

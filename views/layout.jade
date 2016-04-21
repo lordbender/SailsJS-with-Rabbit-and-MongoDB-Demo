@@ -82,7 +82,15 @@ html
           + Change the order of your scripts
           + Import scripts from other directories
           + Use a different preprocessor, like TypeScript
-
+    #target-1
+      span Alert box one
+    hr
+    #target-2
+      span Alert box two
+    hr
+    #target-3
+      span Alert box three
+    hr
     // SCRIPTS
     script(src="/js/dependencies/sails.io.js")
     script(src="/js/dependencies/jquery-2.2.3.min.js")
@@ -91,3 +99,7 @@ html
     script(src="/js/beeline.alerts.js")
     // SCRIPTS END
 
+    script.
+      var target1 = new window.beeline.Alerts('target-1');
+      var target2 = new window.beeline.Alerts('target-2');
+      var target3 = new window.beeline.Alerts('target-3');
